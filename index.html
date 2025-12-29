@@ -3,88 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RBX Gold - Roblox Case Battles</title>
+    <title>GoldPump - Case Battles, Coinflip & Roulette</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://goldpump.com/favicon.ico">
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
         <div class="container">
-            <div class="nav">
+            <div class="header-content">
                 <div class="logo">
-                    <h1>RBX <span class="gold">GOLD</span></h1>
+                    <img src="https://goldpump.com/logo.png" alt="GoldPump">
                 </div>
-                <nav class="nav-links">
-                    <a href="#cases" class="nav-link">Cases</a>
+                <nav class="nav">
+                    <a href="#cases" class="nav-link active">Cases</a>
                     <a href="#battles" class="nav-link">Battles</a>
+                    <a href="#coinflip" class="nav-link">Coinflip</a>
+                    <a href="#roulette" class="nav-link">Roulette</a>
+                    <a href="#jackpot" class="nav-link">Jackpot</a>
                     <a href="#leaderboard" class="nav-link">Leaderboard</a>
-                    <a href="#inventory" class="nav-link">Inventory</a>
+                    <a href="#affiliates" class="nav-link">Affiliates</a>
+                    <a href="#support" class="nav-link">Support</a>
                 </nav>
-                <div class="user-section">
-                    <div class="user-profile" id="userProfile">
-                        <div class="avatar-container">
-                            <img id="userAvatar" src="https://tr.rbxcdn.com/30DAY-Avatar.3a832d1b2880843a8b5d4b5e5c5e5c5e" alt="Avatar" class="user-avatar">
-                            <div class="status-indicator online"></div>
+                <div class="header-right">
+                    <div class="balance-display">
+                        <div class="balance-item">
+                            <img src="https://goldpump.com/icons/coins.png" alt="Coins">
+                            <span id="coinBalance">0.00</span>
                         </div>
-                        <div class="user-info">
-                            <span id="username" class="username">Guest</span>
-                            <div class="balance">
-                                <span class="robux-icon">R$</span>
-                                <span id="userBalance">1,250</span>
-                            </div>
+                        <div class="balance-item">
+                            <img src="https://goldpump.com/icons/gems.png" alt="Gems">
+                            <span id="gemBalance">0</span>
                         </div>
                     </div>
-                    <button class="login-btn" id="loginBtn">Login with Roblox</button>
-                    <button class="deposit-btn">Deposit</button>
-                    <button class="withdraw-btn">Withdraw</button>
+                    <button class="deposit-btn" onclick="openDeposit()">Deposit</button>
+                    <button class="withdraw-btn" onclick="openWithdraw()">Withdraw</button>
+                    <button class="inventory-btn" onclick="openInventory()">
+                        <img src="https://goldpump.com/icons/inventory.png" alt="Inventory">
+                        <span id="inventoryCount">0</span>
+                    </button>
+                    <div class="user-menu" onclick="toggleUserMenu()">
+                        <img src="https://goldpump.com/default-avatar.png" alt="User" id="userAvatar">
+                        <span id="username">Guest</span>
+                        <div class="dropdown" id="userDropdown">
+                            <a href="#" onclick="openProfile()">Profile</a>
+                            <a href="#" onclick="openSettings()">Settings</a>
+                            <a href="#" onclick="logout()">Logout</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- Main Content -->
     <main>
         <!-- Hero Section -->
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
-                    <h2 class="hero-title">Open Cases & Battle Friends</h2>
-                    <p class="hero-subtitle">Win rare Roblox items and dominate the leaderboard</p>
-                    <div class="hero-stats">
-                        <div class="stat">
-                            <span class="stat-number">2.5M+</span>
-                            <span class="stat-label">Players</span>
+                    <div class="hero-text">
+                        <h1>Win Big on GoldPump</h1>
+                        <p>The ultimate CS:GO case opening & gambling platform</p>
+                        <div class="hero-stats">
+                            <div class="stat">
+                                <span class="stat-number" id="totalUsers">2,847,293</span>
+                                <span class="stat-label">Users</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number" id="totalWinnings">$47.2M</span>
+                                <span class="stat-label">Total Won</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number" id="onlineUsers">28,473</span>
+                                <span class="stat-label">Online Now</span>
+                            </div>
                         </div>
-                        <div class="stat">
-                            <span class="stat-number">50M+</span>
-                            <span class="stat-label">Robux Won</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">1000+</span>
-                            <span class="stat-label">Items</span>
+                        <div class="hero-buttons">
+                            <button class="btn-primary" onclick="scrollToSection('cases')">Open Cases</button>
+                            <button class="btn-secondary" onclick="scrollToSection('battles')">Join Battle</button>
                         </div>
                     </div>
-                    <button class="cta-button" onclick="scrollToSection('cases')">Start Opening</button>
-                </div>
-                <div class="hero-image">
-                    <div class="floating-case">
-                        <div class="case-3d">
-                            <div class="case-face case-front">
-                                <img src="https://tr.rbxcdn.com/robux-icon.png" alt="Robux" class="case-icon">
+                    <div class="hero-visual">
+                        <div class="floating-cases">
+                            <div class="case-item case-1">
+                                <img src="https://goldpump.com/cases/fragile.png" alt="Case">
                             </div>
-                            <div class="case-face case-back">
-                                <img src="https://tr.rbxcdn.com/robux-icon.png" alt="Robux" class="case-icon">
+                            <div class="case-item case-2">
+                                <img src="https://goldpump.com/cases/prime.png" alt="Case">
                             </div>
-                            <div class="case-face case-left">
-                                <img src="https://tr.rbxcdn.com/robux-icon.png" alt="Robux" class="case-icon">
-                            </div>
-                            <div class="case-face case-right">
-                                <img src="https://tr.rbxcdn.com/robux-icon.png" alt="Robux" class="case-icon">
-                            </div>
-                            <div class="case-face case-top">
-                                <img src="https://tr.rbxcdn.com/robux-icon.png" alt="Robux" class="case-icon">
-                            </div>
-                            <div class="case-face case-bottom">
-                                <img src="https://tr.rbxcdn.com/robux-icon.png" alt="Robux" class="case-icon">
+                            <div class="case-item case-3">
+                                <img src="https://goldpump.com/cases/horizon.png" alt="Case">
                             </div>
                         </div>
                     </div>
@@ -92,200 +102,271 @@
             </div>
         </section>
 
-        <!-- Featured Cases -->
-        <section id="cases" class="featured-cases">
+        <!-- Cases Section -->
+        <section id="cases" class="cases-section">
             <div class="container">
-                <h2 class="section-title">Featured Cases</h2>
-                <div class="case-grid" id="caseGrid">
-                    <!-- Cases will be dynamically loaded here -->
+                <div class="section-header">
+                    <h2>Case Opening</h2>
+                    <div class="case-filters">
+                        <button class="filter-btn active" data-filter="all">All Cases</button>
+                        <button class="filter-btn" data-filter="priced">Priced</button>
+                        <button class="filter-btn" data-filter="exclusive">Exclusive</button>
+                        <button class="filter-btn" data-filter="partner">Partner</button>
+                    </div>
+                </div>
+                <div class="cases-grid" id="casesGrid">
+                    <!-- Cases will be loaded here -->
                 </div>
             </div>
         </section>
 
-        <!-- Active Battles -->
-        <section id="battles" class="active-battles">
+        <!-- Battles Section -->
+        <section id="battles" class="battles-section">
             <div class="container">
-                <h2 class="section-title">Active Battles</h2>
-                <div class="battle-controls">
+                <div class="section-header">
+                    <h2>Case Battles</h2>
                     <button class="create-battle-btn" onclick="createBattle()">Create Battle</button>
-                    <select id="battleFilter" class="battle-filter">
-                        <option value="all">All Battles</option>
-                        <option value="1v1">1v1</option>
-                        <option value="2v2">2v2</option>
-                        <option value="3v3">3v3</option>
-                    </select>
                 </div>
-                <div class="battle-list" id="battleList">
-                    <!-- Battles will be dynamically loaded here -->
+                <div class="battles-content">
+                    <div class="battles-list" id="battlesList">
+                        <!-- Active battles will be loaded here -->
+                    </div>
+                    <div class="battle-creation" id="battleCreation" style="display: none;">
+                        <div class="battle-setup">
+                            <h3>Create New Battle</h3>
+                            <div class="setup-options">
+                                <div class="option-group">
+                                    <label>Battle Mode</label>
+                                    <select id="battleMode">
+                                        <option value="1v1">1v1</option>
+                                        <option value="2v2">2v2</option>
+                                        <option value="3v3">3v3</option>
+                                        <option value="4v4">4v4</option>
+                                    </select>
+                                </div>
+                                <div class="option-group">
+                                    <label>Round Count</label>
+                                    <select id="roundCount">
+                                        <option value="1">1 Round</option>
+                                        <option value="3">3 Rounds</option>
+                                        <option value="5">5 Rounds</option>
+                                    </select>
+                                </div>
+                                <div class="option-group">
+                                    <label>Entry Fee</label>
+                                    <input type="number" id="entryFee" value="100" min="10" max="10000" step="10">
+                                </div>
+                                <div class="option-group">
+                                    <label>Select Cases</label>
+                                    <div class="case-selection" id="battleCaseSelection">
+                                        <!-- Available cases for battle -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="battle-actions">
+                                <button class="btn-cancel" onclick="cancelBattleCreation()">Cancel</button>
+                                <button class="btn-primary" onclick="confirmBattleCreation()">Create Battle</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Battles -->
+        <section class="live-battles">
+            <div class="container">
+                <h2>Live Battles</h2>
+                <div class="live-battles-grid" id="liveBattlesGrid">
+                    <!-- Live battle streams will be shown here -->
                 </div>
             </div>
         </section>
 
         <!-- Leaderboard -->
-        <section id="leaderboard" class="leaderboard">
+        <section id="leaderboard" class="leaderboard-section">
             <div class="container">
-                <h2 class="section-title">Top Players</h2>
-                <div class="leaderboard-list" id="leaderboardList">
-                    <!-- Leaderboard will be dynamically loaded here -->
+                <h2>Leaderboard</h2>
+                <div class="leaderboard-tabs">
+                    <button class="tab-btn active" data-tab="daily">Daily</button>
+                    <button class="tab-btn" data-tab="weekly">Weekly</button>
+                    <button class="tab-btn" data-tab="monthly">Monthly</button>
+                    <button class="tab-btn" data-tab="alltime">All Time</button>
+                </div>
+                <div class="leaderboard-table">
+                    <div class="table-header">
+                        <span>Rank</span>
+                        <span>Player</span>
+                        <span>Winnings</span>
+                        <span>Win Rate</span>
+                        <span>Battles</span>
+                    </div>
+                    <div class="table-body" id="leaderboardBody">
+                        <!-- Leaderboard entries will be loaded here -->
+                    </div>
                 </div>
             </div>
         </section>
-
-        <!-- Login Modal -->
-        <div id="loginModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Login with Roblox</h3>
-                    <span class="close" onclick="closeModal('loginModal')">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <div class="login-form">
-                        <div class="roblox-login">
-                            <img src="https://tr.rbxcdn.com/roblox-logo-2022.png" alt="Roblox" class="roblox-logo">
-                            <p>Connect your Roblox account to start playing!</p>
-                            <input type="text" id="robloxUsername" placeholder="Roblox Username" class="login-input">
-                            <input type="password" id="robloxPassword" placeholder="Password" class="login-input">
-                            <button class="roblox-login-btn" onclick="loginWithRoblox()">Login</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sound Effects -->
-        <audio id="openCaseSound" preload="auto">
-            <source src="https://www.roblox.com/game-sounds/robux-sound.mp3" type="audio/mpeg">
-        </audio>
-        <audio id="winSound" preload="auto">
-            <source src="https://www.roblox.com/game-sounds/victory-sound.mp3" type="audio/mpeg">
-        </audio>
-        <audio id="battleSound" preload="auto">
-            <source src="https://www.roblox.com/game-sounds/battle-sound.mp3" type="audio/mpeg">
-        </audio>
-        <audio id="clickSound" preload="auto">
-            <source src="https://www.roblox.com/game-sounds/click-sound.mp3" type="audio/mpeg">
-        </audio>
-
-        <!-- Inventory Modal -->
-        <div id="inventoryModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Your Inventory</h3>
-                    <span class="close" onclick="closeModal('inventoryModal')">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <div class="inventory-grid" id="inventoryGrid">
-                        <!-- Inventory items will be loaded here -->
-                    </div>
-                    <div class="inventory-value">
-                        <span>Total Value: </span>
-                        <span id="inventoryValue">0</span>
-                        <span class="balance-icon">💎</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Battle Creation Modal -->
-        <div id="battleModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Create Battle</h3>
-                    <span class="close" onclick="closeModal('battleModal')">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <div class="battle-setup">
-                        <div class="setup-group">
-                            <label>Battle Type</label>
-                            <select id="battleType">
-                                <option value="1v1">1v1 Battle</option>
-                                <option value="2v2">2v2 Battle</option>
-                                <option value="3v3">3v3 Battle</option>
-                            </select>
-                        </div>
-                        <div class="setup-group">
-                            <label>Max Players</label>
-                            <select id="maxPlayers">
-                                <option value="2">2 Players</option>
-                                <option value="4">4 Players</option>
-                                <option value="6">6 Players</option>
-                            </select>
-                        </div>
-                        <div class="setup-group">
-                            <label>Entry Fee</label>
-                            <input type="number" id="entryFee" value="100" min="10" max="10000">
-                        </div>
-                        <div class="setup-group">
-                            <label>Case Selection</label>
-                            <div class="case-selection" id="caseSelection">
-                                <!-- Cases will be loaded here -->
-                            </div>
-                        </div>
-                        <button class="confirm-battle-btn" onclick="confirmBattle()">Create Battle</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Case Opening Animation -->
-        <div id="caseOpeningModal" class="modal">
-            <div class="modal-content case-opening">
-                <div class="case-animation">
-                    <div class="case-3d spinning">
-                        <div class="case-face case-front"></div>
-                        <div class="case-face case-back"></div>
-                        <div class="case-face case-left"></div>
-                        <div class="case-face case-right"></div>
-                        <div class="case-face case-top"></div>
-                        <div class="case-face case-bottom"></div>
-                    </div>
-                </div>
-                <div class="reel-container">
-                    <div class="item-reel" id="itemReel">
-                        <!-- Items will spin here -->
-                    </div>
-                </div>
-                <div class="result-container" id="resultContainer" style="display: none;">
-                    <h3>You Won!</h3>
-                    <div class="won-item" id="wonItem">
-                        <!-- Won item will be displayed here -->
-                    </div>
-                    <button class="continue-btn" onclick="closeCaseOpening()">Continue</button>
-                </div>
-            </div>
-        </div>
     </main>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>RBX Gold</h4>
-                    <p>The ultimate Roblox gambling experience</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Links</h4>
-                    <a href="#terms">Terms of Service</a>
-                    <a href="#privacy">Privacy Policy</a>
-                    <a href="#fairness">Fairness Policy</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Support</h4>
-                    <a href="#help">Help Center</a>
-                    <a href="#contact">Contact Us</a>
-                    <a href="#faq">FAQ</a>
+    <!-- Modals -->
+    <!-- Case Opening Modal -->
+    <div id="caseOpeningModal" class="modal">
+        <div class="modal-content case-opening">
+            <div class="case-animation">
+                <div class="case-3d spinning">
+                    <img src="https://goldpump.com/cases/fragile.png" alt="Case">
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 RBX Gold. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link">📱</a>
-                    <a href="#" class="social-link">💬</a>
-                    <a href="#" class="social-link">🎮</a>
+            <div class="reel-container">
+                <div class="item-reel" id="itemReel">
+                    <!-- Spinning items -->
+                </div>
+            </div>
+            <div class="result-container" id="resultContainer" style="display: none;">
+                <h3>You Won!</h3>
+                <div class="won-item" id="wonItem">
+                    <!-- Won item display -->
+                </div>
+                <div class="result-actions">
+                    <button class="btn-secondary" onclick="sellItem()">Sell for <span id="sellPrice">0.00</span></button>
+                    <button class="btn-primary" onclick="keepItem()">Keep Item</button>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+
+    <!-- Deposit Modal -->
+    <div id="depositModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Deposit</h3>
+                <button class="close-btn" onclick="closeModal('depositModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="deposit-methods">
+                    <div class="method-card" onclick="selectDepositMethod('crypto')">
+                        <img src="https://goldpump.com/icons/crypto.png" alt="Crypto">
+                        <span>Cryptocurrency</span>
+                    </div>
+                    <div class="method-card" onclick="selectDepositMethod('card')">
+                        <img src="https://goldpump.com/icons/card.png" alt="Card">
+                        <span>Credit Card</span>
+                    </div>
+                    <div class="method-card" onclick="selectDepositMethod('paypal')">
+                        <img src="https://goldpump.com/icons/paypal.png" alt="PayPal">
+                        <span>PayPal</span>
+                    </div>
+                    <div class="method-card" onclick="selectDepositMethod('g2a')">
+                        <img src="https://goldpump.com/icons/g2a.png" alt="G2A">
+                        <span>G2A Pay</span>
+                    </div>
+                </div>
+                <div class="deposit-form" id="depositForm" style="display: none;">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="number" id="depositAmount" min="5" max="10000" step="0.01">
+                    </div>
+                    <div class="bonus-info">
+                        <span>Deposit Bonus: </span>
+                        <span id="depositBonus">+5%</span>
+                    </div>
+                    <button class="btn-primary" onclick="confirmDeposit()">Deposit Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdraw Modal -->
+    <div id="withdrawModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Withdraw</h3>
+                <button class="close-btn" onclick="closeModal('withdrawModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="withdraw-methods">
+                    <div class="method-card" onclick="selectWithdrawMethod('crypto')">
+                        <img src="https://goldpump.com/icons/crypto.png" alt="Crypto">
+                        <span>Cryptocurrency</span>
+                    </div>
+                    <div class="method-card" onclick="selectWithdrawMethod('paypal')">
+                        <img src="https://goldpump.com/icons/paypal.png" alt="PayPal">
+                        <span>PayPal</span>
+                    </div>
+                    <div class="method-card" onclick="selectWithdrawMethod('bank')">
+                        <img src="https://goldpump.com/icons/bank.png" alt="Bank">
+                        <span>Bank Transfer</span>
+                    </div>
+                    <div class="method-card" onclick="selectWithdrawMethod('skin')">
+                        <img src="https://goldpump.com/icons/skin.png" alt="Skins">
+                        <span>CS:GO Skins</span>
+                    </div>
+                </div>
+                <div class="withdraw-form" id="withdrawForm" style="display: none;">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="number" id="withdrawAmount" min="10" max="10000" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Wallet Address</label>
+                        <input type="text" id="withdrawAddress" placeholder="Enter your wallet address">
+                    </div>
+                    <div class="fee-info">
+                        <span>Withdrawal Fee: </span>
+                        <span id="withdrawFee">2.5%</span>
+                    </div>
+                    <button class="btn-primary" onclick="confirmWithdraw()">Withdraw Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inventory Modal -->
+    <div id="inventoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Inventory</h3>
+                <button class="close-btn" onclick="closeModal('inventoryModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="inventory-filters">
+                    <button class="filter-btn active" data-filter="all">All Items</button>
+                    <button class="filter-btn" data-filter="knives">Knives</button>
+                    <button class="filter-btn" data-filter="guns">Guns</button>
+                    <button class="filter-btn" data-filter="gloves">Gloves</button>
+                    <button class="filter-btn" data-filter="agents">Agents</button>
+                </div>
+                <div class="inventory-grid" id="inventoryGrid">
+                    <!-- Inventory items will be loaded here -->
+                </div>
+                <div class="inventory-summary">
+                    <div class="summary-item">
+                        <span>Total Items:</span>
+                        <span id="totalItems">0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Total Value:</span>
+                        <span id="totalValue">$0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sound Elements -->
+    <audio id="openCaseSound" preload="auto">
+        <source src="https://goldpump.com/sounds/case-open.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="winSound" preload="auto">
+        <source src="https://goldpump.com/sounds/win.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="clickSound" preload="auto">
+        <source src="https://goldpump.com/sounds/click.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="coinflipSound" preload="auto">
+        <source src="https://goldpump.com/sounds/coinflip.mp3" type="audio/mpeg">
+    </audio>
 
     <script src="script.js"></script>
 </body>
