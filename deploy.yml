@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy GoldPump to GitHub Pages
 
 on:
   push:
