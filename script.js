@@ -1,321 +1,526 @@
-// Game Data
-const gameData = {
+// GoldPump JavaScript - Complete Functionality
+
+// Game State
+const gameState = {
+    user: {
+        id: null,
+        username: 'Guest',
+        avatar: 'https://goldpump.com/default-avatar.png',
+        balance: {
+            coins: 0.00,
+            gems: 0
+        },
+        inventory: [],
+        stats: {
+            totalWinnings: 0,
+            battlesWon: 0,
+            battlesLost: 0,
+            casesOpened: 0
+        }
+    },
     cases: [
         {
             id: 1,
-            name: "Starter Case",
-            price: 50,
-            icon: "📦",
+            name: 'Fragile Case',
+            price: 2.50,
+            image: 'https://goldpump.com/cases/fragile.png',
+            description: 'Low risk, low reward case perfect for beginners',
             items: [
-                { name: "Common Knife", rarity: "common", value: 10, color: "#808080" },
-                { name: "Rare Pistol", rarity: "rare", value: 25, color: "#4169e1" },
-                { name: "Epic Rifle", rarity: "epic", value: 100, color: "#9370db" },
-                { name: "Legendary Sniper", rarity: "legendary", value: 500, color: "#ff8c00" }
+                { name: 'Glock-18 | Water Elemental', rarity: 'Mil-Spec', value: 0.15, color: '#4b69ff', image: 'https://goldpump.com/items/glock-water.png' },
+                { name: 'P250 | Muertos', rarity: 'Mil-Spec', value: 0.25, color: '#4b69ff', image: 'https://goldpump.com/items/p250-muertos.png' },
+                { name: 'MP7 | Bloodsport', rarity: 'Restricted', value: 0.85, color: '#8847ff', image: 'https://goldpump.com/items/mp7-bloodsport.png' },
+                { name: 'M4A4 | Howl', rarity: 'Contraband', value: 3500.00, color: '#e4ae39', image: 'https://goldpump.com/items/m4a4-howl.png' }
             ]
         },
         {
             id: 2,
-            name: "Warrior Case",
-            price: 100,
-            icon: "⚔️",
+            name: 'Prisma 2 Case',
+            price: 12.50,
+            image: 'https://goldpump.com/cases/prisma2.png',
+            description: 'Vibrant skins with prismatic finishes',
             items: [
-                { name: "Steel Sword", rarity: "common", value: 20, color: "#808080" },
-                { name: "Golden Axe", rarity: "rare", value: 50, color: "#4169e1" },
-                { name: "Dragon Blade", rarity: "epic", value: 200, color: "#9370db" },
-                { name: "Excalibur", rarity: "legendary", value: 1000, color: "#ff8c00" }
+                { name: 'USP-S | Kill Confirmed', rarity: 'Mil-Spec', value: 0.45, color: '#4b69ff', image: 'https://goldpump.com/items/usp-killconfirmed.png' },
+                { name: 'GALIL AR | Chatterbox', rarity: 'Classified', value: 3.50, color: '#d32ce6', image: 'https://goldpump.com/items/galil-chatterbox.png' },
+                { name: 'AWP | Medusa', rarity: 'Covert', value: 1850.00, color: '#eb4b4b', image: 'https://goldpump.com/items/awp-medusa.png' },
+                { name: 'Karambit | Fade', rarity: 'Covert', value: 5200.00, color: '#eb4b4b', image: 'https://goldpump.com/items/karambit-fade.png' }
             ]
         },
         {
             id: 3,
-            name: "Mystery Case",
-            price: 250,
-            icon: "🎰",
+            name: 'Horizon Case',
+            price: 15.50,
+            image: 'https://goldpump.com/cases/horizon.png',
+            description: 'Asian-themed skins with intricate designs',
             items: [
-                { name: "Lucky Charm", rarity: "common", value: 30, color: "#808080" },
-                { name: "Magic Wand", rarity: "rare", value: 75, color: "#4169e1" },
-                { name: "Crystal Orb", rarity: "epic", value: 300, color: "#9370db" },
-                { name: "Ancient Artifact", rarity: "legendary", value: 1500, color: "#ff8c00" }
+                { name: 'M4A1-S | Golden Coil', rarity: 'Mil-Spec', value: 0.65, color: '#4b69ff', image: 'https://goldpump.com/items/m4a1-goldencoil.png' },
+                { name: 'AK-47 | Point Disarray', rarity: 'Restricted', value: 1.25, color: '#8847ff', image: 'https://goldpump.com/items/ak-pointdisarray.png' },
+                { name: 'M9 Bayonet | Doppler', rarity: 'Covert', value: 850.00, color: '#eb4b4b', image: 'https://goldpump.com/items/m9-doppler.png' },
+                { name: 'Gloves | Pandora\'s Box', rarity: 'Extraordinary', value: 4200.00, color: '#f38630', image: 'https://goldpump.com/items/gloves-pandora.png' }
             ]
         },
         {
             id: 4,
-            name: "Elite Case",
-            price: 500,
-            icon: "👑",
+            name: 'Fracture Case',
+            price: 17.50,
+            image: 'https://goldpump.com/cases/fracture.png',
+            description: 'Industrial and military themed skins',
             items: [
-                { name: "Silver Crown", rarity: "rare", value: 100, color: "#4169e1" },
-                { name: "Golden Crown", rarity: "epic", value: 400, color: "#9370db" },
-                { name: "Diamond Crown", rarity: "legendary", value: 2000, color: "#ff8c00" },
-                { name: "Imperial Scepter", rarity: "mythic", value: 5000, color: "#ff1493" }
+                { name: 'P2000 | Acid Etched', rarity: 'Mil-Spec', value: 0.35, color: '#4b69ff', image: 'https://goldpump.com/items/p2000-acidetched.png' },
+                { name: 'M249 | Nebula Crusader', rarity: 'Classified', value: 4.50, color: '#d32ce6', image: 'https://goldpump.com/items/m249-nebula.png' },
+                { name: 'AK-47 | Redline', rarity: 'Covert', value: 45.00, color: '#eb4b4b', image: 'https://goldpump.com/items/ak-redline.png' },
+                { name: 'Butterfly Knife | Marble Fade', rarity: 'Covert', value: 1250.00, color: '#eb4b4b', image: 'https://goldpump.com/items/butterfly-marble.png' }
             ]
         }
     ],
     battles: [],
-    leaderboard: [
-        { rank: 1, name: "ProGamer123", wins: 245, profit: 15420, avatar: "🎮" },
-        { rank: 2, name: "CaseKing", wins: 198, profit: 12350, avatar: "👑" },
-        { rank: 3, name: "LuckyStrike", wins: 167, profit: 9870, avatar: "🍀" },
-        { rank: 4, name: "SniperElite", wins: 143, profit: 7650, avatar: "🎯" },
-        { rank: 5, name: "RichKid99", wins: 121, profit: 5430, avatar: "💰" }
-    ],
-    userInventory: [],
-    userBalance: 1250
+    leaderboard: {
+        daily: [],
+        weekly: [],
+        monthly: [],
+        alltime: []
+    },
+    currentBattle: null,
+    currentCaseOpening: null
 };
 
-// Initialize the game
+// Sound Manager
+class SoundManager {
+    constructor() {
+        this.sounds = {
+            openCase: document.getElementById('openCaseSound'),
+            win: document.getElementById('winSound'),
+            click: document.getElementById('clickSound'),
+            coinflip: document.getElementById('coinflipSound')
+        };
+        this.enabled = true;
+    }
+
+    play(soundName) {
+        if (this.enabled && this.sounds[soundName]) {
+            this.sounds[soundName].play().catch(e => console.log('Sound play failed:', e));
+        }
+    }
+
+    toggle() {
+        this.enabled = !this.enabled;
+        return this.enabled;
+    }
+}
+
+const soundManager = new SoundManager();
+
+// Initialize Application
 document.addEventListener('DOMContentLoaded', function() {
+    initializeApp();
     loadCases();
     loadBattles();
     loadLeaderboard();
-    updateBalance();
-    
-    // Simulate real-time updates
-    setInterval(updateBattles, 5000);
-    setInterval(updateLeaderboard, 10000);
+    updateUI();
+    startRealTimeUpdates();
 });
 
-// Load cases
-function loadCases() {
-    const caseGrid = document.getElementById('caseGrid');
-    caseGrid.innerHTML = '';
-    
-    gameData.cases.forEach(caseItem => {
-        const caseCard = document.createElement('div');
-        caseCard.className = 'case-card';
-        caseCard.innerHTML = `
-            <div class="case-image">${caseItem.icon}</div>
-            <h3 class="case-name">${caseItem.name}</h3>
-            <div class="case-price">${caseItem.price} 💎</div>
-            <button class="open-case-btn" onclick="openCase(${caseItem.id})">Open Case</button>
-        `;
-        caseGrid.appendChild(caseCard);
+function initializeApp() {
+    // Load user data from localStorage
+    const savedUser = localStorage.getItem('goldpump_user');
+    if (savedUser) {
+        gameState.user = JSON.parse(savedUser);
+    } else {
+        // Set initial balance for new users
+        gameState.user.balance.coins = 100.00;
+        gameState.user.balance.gems = 5;
+        saveUserData();
+    }
+
+    // Setup event listeners
+    setupEventListeners();
+}
+
+function setupEventListeners() {
+    // Navigation
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.getAttribute('href').substring(1);
+            scrollToSection(target);
+        });
+    });
+
+    // Case filters
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            filterCases(this.dataset.filter);
+        });
+    });
+
+    // Leaderboard tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            loadLeaderboard(this.dataset.tab);
+        });
+    });
+
+    // Close modals on outside click
+    window.addEventListener('click', function(e) {
+        if (e.target.classList.contains('modal')) {
+            closeModal(e.target.id);
+        }
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
     });
 }
 
-// Load battles
+function loadCases() {
+    const casesGrid = document.getElementById('casesGrid');
+    casesGrid.innerHTML = '';
+
+    gameState.cases.forEach(caseItem => {
+        const caseCard = document.createElement('div');
+        caseCard.className = 'case-card';
+        caseCard.innerHTML = `
+            <div class="case-image">
+                <img src="${caseItem.image}" alt="${caseItem.name}">
+                <div class="case-price">$${caseItem.price.toFixed(2)}</div>
+            </div>
+            <div class="case-info">
+                <h3 class="case-name">${caseItem.name}</h3>
+                <p class="case-description">${caseItem.description}</p>
+                <button class="open-case-btn" onclick="openCase(${caseItem.id})">Open Case</button>
+            </div>
+        `;
+        casesGrid.appendChild(caseCard);
+    });
+}
+
 function loadBattles() {
-    const battleList = document.getElementById('battleList');
-    battleList.innerHTML = '';
-    
-    // Generate some sample battles
-    if (gameData.battles.length === 0) {
-        gameData.battles = [
+    const battlesList = document.getElementById('battlesList');
+    battlesList.innerHTML = '';
+
+    // Generate sample battles
+    if (gameState.battles.length === 0) {
+        gameState.battles = [
             {
                 id: 1,
-                type: '1v1',
-                pot: 200,
+                mode: '1v1',
+                creator: 'ProPlayer123',
+                entryFee: 10.00,
+                pot: 20.00,
                 maxPlayers: 2,
                 currentPlayers: 1,
-                creator: 'Player1',
-                entryFee: 100
+                players: ['ProPlayer123'],
+                status: 'waiting'
             },
             {
                 id: 2,
-                type: '2v2',
-                pot: 800,
+                mode: '2v2',
+                creator: 'TeamAlpha',
+                entryFee: 25.00,
+                pot: 100.00,
                 maxPlayers: 4,
                 currentPlayers: 3,
-                creator: 'TeamAlpha',
-                entryFee: 200
+                players: ['TeamAlpha', 'Player2', 'Player3'],
+                status: 'waiting'
             },
             {
                 id: 3,
-                type: '3v3',
-                pot: 1800,
+                mode: '3v3',
+                creator: 'SquadGoals',
+                entryFee: 50.00,
+                pot: 300.00,
                 maxPlayers: 6,
                 currentPlayers: 4,
-                creator: 'SquadGoals',
-                entryFee: 300
+                players: ['SquadGoals', 'Player5', 'Player6', 'Player7'],
+                status: 'waiting'
             }
         ];
     }
-    
-    gameData.battles.forEach(battle => {
+
+    gameState.battles.forEach(battle => {
         const battleCard = document.createElement('div');
         battleCard.className = 'battle-card';
         
         const playerSlots = [];
         for (let i = 0; i < battle.maxPlayers; i++) {
             const isFilled = i < battle.currentPlayers;
-            playerSlots.push(`<div class="player-slot ${isFilled ? 'filled' : ''}">${isFilled ? '👤' : '?'}</div>`);
+            playerSlots.push(`
+                <div class="player-slot ${isFilled ? 'filled' : ''}">
+                    ${isFilled ? battle.players[i][0] : '?'}
+                </div>
+            `);
         }
-        
+
         battleCard.innerHTML = `
-            <div class="battle-info">
-                <div class="battle-type">${battle.type} - ${battle.creator}'s Battle</div>
-                <div class="battle-pot">Pot: ${battle.pot} 💎</div>
+            <div class="battle-header">
+                <span class="battle-mode">${battle.mode} - ${battle.creator}'s Battle</span>
+                <span class="battle-pot">$${battle.pot.toFixed(2)}</span>
             </div>
             <div class="battle-players">
                 ${playerSlots.join('')}
             </div>
             <button class="join-battle-btn" onclick="joinBattle(${battle.id})" ${battle.currentPlayers >= battle.maxPlayers ? 'disabled' : ''}>
-                ${battle.currentPlayers >= battle.maxPlayers ? 'Full' : `Join (${battle.entryFee} 💎)`}
+                ${battle.currentPlayers >= battle.maxPlayers ? 'Full' : `Join ($${battle.entryFee.toFixed(2)})`}
             </button>
         `;
-        battleList.appendChild(battleCard);
+        battlesList.appendChild(battleCard);
     });
 }
 
-// Load leaderboard
-function loadLeaderboard() {
-    const leaderboardList = document.getElementById('leaderboardList');
-    leaderboardList.innerHTML = '';
-    
-    gameData.leaderboard.forEach(player => {
-        const item = document.createElement('div');
-        item.className = 'leaderboard-item';
+function loadLeaderboard(period = 'daily') {
+    const leaderboardBody = document.getElementById('leaderboardBody');
+    leaderboardBody.innerHTML = '';
+
+    // Generate sample leaderboard data
+    const leaderboardData = [
+        { rank: 1, name: 'DragonSlayer', avatar: 'https://goldpump.com/avatars/dragon.png', winnings: 15420.50, winRate: 68.5, battles: 342 },
+        { rank: 2, name: 'CaseKing', avatar: 'https://goldpump.com/avatars/king.png', winnings: 12350.25, winRate: 72.1, battles: 298 },
+        { rank: 3, name: 'LuckyStrike', avatar: 'https://goldpump.com/avatars/lucky.png', winnings: 9870.75, winRate: 65.8, battles: 276 },
+        { rank: 4, name: 'SniperElite', avatar: 'https://goldpump.com/avatars/sniper.png', winnings: 7650.00, winRate: 59.3, battles: 234 },
+        { rank: 5, name: 'RichBuilder', avatar: 'https://goldpump.com/avatars/rich.png', winnings: 5430.25, winRate: 55.7, battles: 198 }
+    ];
+
+    leaderboardData.forEach(player => {
+        const row = document.createElement('div');
+        row.className = 'leaderboard-row';
         
         let rankClass = '';
         if (player.rank === 1) rankClass = 'gold';
         else if (player.rank === 2) rankClass = 'silver';
         else if (player.rank === 3) rankClass = 'bronze';
-        
-        item.innerHTML = `
+
+        row.innerHTML = `
             <div class="rank ${rankClass}">#${player.rank}</div>
             <div class="player-info">
-                <div class="player-name">${player.avatar} ${player.name}</div>
-                <div class="player-wins">${player.wins} wins</div>
+                <img src="${player.avatar}" alt="${player.name}" class="player-avatar">
+                <span class="player-name">${player.name}</span>
             </div>
-            <div class="player-profit">+${player.profit} 💎</div>
+            <div class="winnings">$${player.winnings.toFixed(2)}</div>
+            <div class="win-rate">${player.winRate}%</div>
+            <div class="battle-count">${player.battles}</div>
         `;
-        leaderboardList.appendChild(item);
+        leaderboardBody.appendChild(row);
     });
 }
 
-// Update balance display
-function updateBalance() {
-    document.getElementById('userBalance').textContent = gameData.userBalance.toLocaleString();
+function updateUI() {
+    // Update balance display
+    document.getElementById('coinBalance').textContent = gameState.user.balance.coins.toFixed(2);
+    document.getElementById('gemBalance').textContent = gameState.user.balance.gems;
+    
+    // Update user info
+    document.getElementById('username').textContent = gameState.user.username;
+    document.getElementById('userAvatar').src = gameState.user.avatar;
+    
+    // Update inventory count
+    document.getElementById('inventoryCount').textContent = gameState.user.inventory.length;
+    
+    // Update stats
+    updateStats();
 }
 
-// Open case
-function openCase(caseId) {
-    const caseItem = gameData.cases.find(c => c.id === caseId);
-    if (!caseItem) return;
+function updateStats() {
+    // Animate stats
+    animateValue('totalUsers', 2847293, 2847293 + Math.floor(Math.random() * 100), 2000);
+    animateValue('totalWinnings', 47.2, 47.2 + Math.random() * 0.1, 2000, true);
+    animateValue('onlineUsers', 28473, 28473 + Math.floor(Math.random() * 50), 2000);
+}
+
+function animateValue(id, start, end, duration, isDecimal = false) {
+    const element = document.getElementById(id);
+    const range = end - start;
+    const increment = range / (duration / 16);
+    let current = start;
     
-    if (gameData.userBalance < caseItem.price) {
+    const timer = setInterval(() => {
+        current += increment;
+        if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+            current = end;
+            clearInterval(timer);
+        }
+        
+        if (isDecimal) {
+            element.textContent = current.toFixed(1) + 'M';
+        } else {
+            element.textContent = Math.floor(current).toLocaleString();
+        }
+    }, 16);
+}
+
+// Case Opening Functions
+function openCase(caseId) {
+    const caseItem = gameState.cases.find(c => c.id === caseId);
+    if (!caseItem) return;
+
+    if (gameState.user.balance.coins < caseItem.price) {
         showNotification('Insufficient balance!', 'error');
         return;
     }
-    
+
     // Deduct cost
-    gameData.userBalance -= caseItem.price;
-    updateBalance();
-    
-    // Show case opening modal
-    showCaseOpening(caseItem);
+    gameState.user.balance.coins -= caseItem.price;
+    gameState.user.stats.casesOpened++;
+    updateUI();
+    saveUserData();
+
+    // Start case opening animation
+    startCaseOpening(caseItem);
 }
 
-// Show case opening animation
-function showCaseOpening(caseItem) {
+function startCaseOpening(caseItem) {
     const modal = document.getElementById('caseOpeningModal');
     const itemReel = document.getElementById('itemReel');
     const resultContainer = document.getElementById('resultContainer');
-    const wonItem = document.getElementById('wonItem');
     
-    // Create reel items (multiple items for spinning effect)
+    // Create spinning reel
     const reelItems = [];
     for (let i = 0; i < 20; i++) {
         const randomItem = getRandomItem(caseItem);
         reelItems.push(`
             <div class="reel-item">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">${randomItem.icon || '🎁'}</div>
-                <div style="font-weight: 600; font-size: 0.9rem;">${randomItem.name}</div>
-                <div style="color: ${randomItem.color}; font-size: 0.8rem;">${randomItem.rarity}</div>
+                <img src="${randomItem.image}" alt="${randomItem.name}" style="width: 80px; height: 80px; object-fit: contain;">
+                <div style="font-weight: 600; font-size: 0.8rem;">${randomItem.name}</div>
+                <div style="color: ${randomItem.color}; font-size: 0.7rem;">${randomItem.rarity}</div>
             </div>
         `);
     }
-    
-    // Set the winning item (middle item)
+
+    // Set winning item (middle position)
     const winningItem = getRandomItem(caseItem);
     reelItems[10] = `
         <div class="reel-item" style="border-color: #ffd700;">
-            <div style="font-size: 2rem; margin-bottom: 0.5rem;">${winningItem.icon || '🎁'}</div>
-            <div style="font-weight: 600; font-size: 0.9rem;">${winningItem.name}</div>
-            <div style="color: ${winningItem.color}; font-size: 0.8rem;">${winningItem.rarity}</div>
+            <img src="${winningItem.image}" alt="${winningItem.name}" style="width: 80px; height: 80px; object-fit: contain;">
+            <div style="font-weight: 600; font-size: 0.8rem;">${winningItem.name}</div>
+            <div style="color: ${winningItem.color}; font-size: 0.7rem;">${winningItem.rarity}</div>
         </div>
     `;
-    
+
     itemReel.innerHTML = reelItems.join('');
     resultContainer.style.display = 'none';
     modal.style.display = 'block';
     
+    soundManager.play('openCase');
+
     // Show result after animation
     setTimeout(() => {
-        resultContainer.style.display = 'block';
-        wonItem.innerHTML = `
-            <div style="font-size: 3rem; margin-bottom: 1rem;">${winningItem.icon || '🎁'}</div>
-            <h3 style="color: ${winningItem.color}; margin-bottom: 0.5rem;">${winningItem.name}</h3>
-            <p style="color: ${winningItem.color}; font-size: 1.2rem; margin-bottom: 0.5rem;">${winningItem.rarity}</p>
-            <p style="font-size: 1.5rem; font-weight: 700; color: #ffd700;">Value: ${winningItem.value} 💎</p>
-        `;
-        
-        // Add to inventory
-        gameData.userInventory.push(winningItem);
-        gameData.userBalance += winningItem.value;
-        updateBalance();
+        showCaseResult(winningItem);
     }, 3000);
 }
 
-// Get random item from case
+function showCaseResult(item) {
+    const resultContainer = document.getElementById('resultContainer');
+    const wonItem = document.getElementById('wonItem');
+    const sellPrice = document.getElementById('sellPrice');
+    
+    resultContainer.style.display = 'block';
+    wonItem.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" style="width: 120px; height: 120px; object-fit: contain; margin-bottom: 1rem;">
+        <h3 style="color: ${item.color}; margin-bottom: 0.5rem;">${item.name}</h3>
+        <p style="color: ${item.color}; font-size: 1.1rem; margin-bottom: 0.5rem;">${item.rarity}</p>
+        <p style="font-size: 1.3rem; font-weight: 700; color: #ffd700;">Value: $${item.value.toFixed(2)}</p>
+    `;
+    
+    sellPrice.textContent = item.value.toFixed(2);
+    gameState.currentCaseOpening = item;
+    
+    // Add to inventory
+    gameState.user.inventory.push(item);
+    gameState.user.balance.coins += item.value;
+    gameState.user.stats.totalWinnings += item.value;
+    updateUI();
+    saveUserData();
+    
+    soundManager.play('win');
+}
+
 function getRandomItem(caseItem) {
     const random = Math.random() * 100;
     let cumulative = 0;
     
     // Rarity chances
     const chances = {
-        common: 60,
-        rare: 30,
-        epic: 8,
-        legendary: 2,
-        mythic: caseItem.items.some(item => item.rarity === 'mythic') ? 0.5 : 0
+        'Mil-Spec': 80,
+        'Restricted': 15,
+        'Classified': 4,
+        'Covert': 0.9,
+        'Contraband': 0.1
     };
     
-    if (random < chances.common) {
-        return caseItem.items.filter(item => item.rarity === 'common')[Math.floor(Math.random() * caseItem.items.filter(item => item.rarity === 'common').length)];
-    } else if (random < chances.common + chances.rare) {
-        return caseItem.items.filter(item => item.rarity === 'rare')[Math.floor(Math.random() * caseItem.items.filter(item => item.rarity === 'rare').length)];
-    } else if (random < chances.common + chances.rare + chances.epic) {
-        return caseItem.items.filter(item => item.rarity === 'epic')[Math.floor(Math.random() * caseItem.items.filter(item => item.rarity === 'epic').length)];
-    } else if (random < chances.common + chances.rare + chances.epic + chances.legendary) {
-        return caseItem.items.filter(item => item.rarity === 'legendary')[Math.floor(Math.random() * caseItem.items.filter(item => item.rarity === 'legendary').length)];
+    const itemsByRarity = {};
+    caseItem.items.forEach(item => {
+        if (!itemsByRarity[item.rarity]) {
+            itemsByRarity[item.rarity] = [];
+        }
+        itemsByRarity[item.rarity].push(item);
+    });
+    
+    if (random < chances['Mil-Spec']) {
+        return itemsByRarity['Mil-Spec'][Math.floor(Math.random() * itemsByRarity['Mil-Spec'].length)];
+    } else if (random < chances['Mil-Spec'] + chances['Restricted']) {
+        return itemsByRarity['Restricted'][Math.floor(Math.random() * itemsByRarity['Restricted'].length)];
+    } else if (random < chances['Mil-Spec'] + chances['Restricted'] + chances['Classified']) {
+        return itemsByRarity['Classified'][Math.floor(Math.random() * itemsByRarity['Classified'].length)];
+    } else if (random < chances['Mil-Spec'] + chances['Restricted'] + chances['Classified'] + chances['Covert']) {
+        return itemsByRarity['Covert'][Math.floor(Math.random() * itemsByRarity['Covert'].length)];
     } else {
-        return caseItem.items.filter(item => item.rarity === 'mythic')[Math.floor(Math.random() * caseItem.items.filter(item => item.rarity === 'mythic').length)];
+        return itemsByRarity['Contraband'][Math.floor(Math.random() * itemsByRarity['Contraband'].length)];
     }
 }
 
-// Close case opening
-function closeCaseOpening() {
-    document.getElementById('caseOpeningModal').style.display = 'none';
+function sellItem() {
+    if (gameState.currentCaseOpening) {
+        gameState.user.balance.coins += gameState.currentCaseOpening.value;
+        updateUI();
+        saveUserData();
+        closeModal('caseOpeningModal');
+        showNotification('Item sold!', 'success');
+    }
 }
 
-// Create battle
+function keepItem() {
+    closeModal('caseOpeningModal');
+    showNotification('Item added to inventory!', 'success');
+}
+
+// Battle Functions
 function createBattle() {
-    const modal = document.getElementById('battleModal');
-    const caseSelection = document.getElementById('caseSelection');
+    document.getElementById('battleCreation').style.display = 'block';
+    loadBattleCaseSelection();
+}
+
+function loadBattleCaseSelection() {
+    const selection = document.getElementById('battleCaseSelection');
+    selection.innerHTML = '';
     
-    // Load case options
-    caseSelection.innerHTML = '';
-    gameData.cases.forEach(caseItem => {
+    gameState.cases.forEach(caseItem => {
         const caseOption = document.createElement('div');
         caseOption.className = 'case-option';
         caseOption.innerHTML = `
-            <div style="font-size: 2rem;">${caseItem.icon}</div>
-            <div style="font-size: 0.8rem; font-weight: 600;">${caseItem.name}</div>
+            <img src="${caseItem.image}" alt="${caseItem.name}" style="width: 40px; height: 40px; object-fit: contain;">
+            <span style="font-size: 0.8rem;">${caseItem.name}</span>
         `;
         caseOption.onclick = function() {
             document.querySelectorAll('.case-option').forEach(opt => opt.classList.remove('selected'));
             this.classList.add('selected');
         };
-        caseSelection.appendChild(caseOption);
+        selection.appendChild(caseOption);
     });
-    
-    modal.style.display = 'block';
 }
 
-// Confirm battle creation
-function confirmBattle() {
-    const battleType = document.getElementById('battleType').value;
-    const entryFee = parseInt(document.getElementById('entryFee').value);
+function confirmBattleCreation() {
+    const mode = document.getElementById('battleMode').value;
+    const rounds = document.getElementById('roundCount').value;
+    const entryFee = parseFloat(document.getElementById('entryFee').value);
     const selectedCases = document.querySelectorAll('.case-option.selected');
     
     if (selectedCases.length === 0) {
@@ -323,34 +528,42 @@ function confirmBattle() {
         return;
     }
     
-    if (gameData.userBalance < entryFee) {
+    if (gameState.user.balance.coins < entryFee) {
         showNotification('Insufficient balance!', 'error');
         return;
     }
     
     // Create battle
     const newBattle = {
-        id: gameData.battles.length + 1,
-        type: battleType,
-        pot: entryFee * (battleType === '1v1' ? 2 : battleType === '2v2' ? 4 : 6),
-        maxPlayers: battleType === '1v1' ? 2 : battleType === '2v2' ? 4 : 6,
+        id: gameState.battles.length + 1,
+        mode: mode,
+        creator: gameState.user.username,
+        entryFee: entryFee,
+        pot: entryFee * (mode === '1v1' ? 2 : mode === '2v2' ? 4 : mode === '3v3' ? 6 : 8),
+        maxPlayers: mode === '1v1' ? 2 : mode === '2v2' ? 4 : mode === '3v3' ? 6 : 8,
         currentPlayers: 1,
-        creator: 'You',
-        entryFee: entryFee
+        players: [gameState.user.username],
+        status: 'waiting',
+        rounds: rounds,
+        cases: Array.from(selectedCases).map(opt => opt.textContent.trim())
     };
     
-    gameData.battles.unshift(newBattle);
-    gameData.userBalance -= entryFee;
-    updateBalance();
+    gameState.battles.unshift(newBattle);
+    gameState.user.balance.coins -= entryFee;
+    updateUI();
+    saveUserData();
     
-    closeModal('battleModal');
+    cancelBattleCreation();
     loadBattles();
     showNotification('Battle created successfully!', 'success');
 }
 
-// Join battle
+function cancelBattleCreation() {
+    document.getElementById('battleCreation').style.display = 'none';
+}
+
 function joinBattle(battleId) {
-    const battle = gameData.battles.find(b => b.id === battleId);
+    const battle = gameState.battles.find(b => b.id === battleId);
     if (!battle) return;
     
     if (battle.currentPlayers >= battle.maxPlayers) {
@@ -358,117 +571,177 @@ function joinBattle(battleId) {
         return;
     }
     
-    if (gameData.userBalance < battle.entryFee) {
+    if (gameState.user.balance.coins < battle.entryFee) {
         showNotification('Insufficient balance!', 'error');
         return;
     }
     
-    gameData.userBalance -= battle.entryFee;
+    gameState.user.balance.coins -= battle.entryFee;
     battle.currentPlayers++;
     battle.pot += battle.entryFee;
+    battle.players.push(gameState.user.username);
     
-    updateBalance();
+    updateUI();
+    saveUserData();
     loadBattles();
     
     if (battle.currentPlayers === battle.maxPlayers) {
-        // Start battle simulation
-        setTimeout(() => startBattle(battleId), 1000);
-    }
-    
-    showNotification(`Joined ${battle.type} battle!`, 'success');
-}
-
-// Start battle (simulation)
-function startBattle(battleId) {
-    const battle = gameData.battles.find(b => b.id === battleId);
-    if (!battle) return;
-    
-    // Simulate battle results
-    const winner = Math.random() < 0.3; // 30% chance to win
-    const winAmount = battle.pot * 0.9; // 10% house edge
-    
-    if (winner) {
-        gameData.userBalance += winAmount;
-        showNotification(`You won the battle! +${winAmount} 💎`, 'success');
+        startBattle(battle);
     } else {
-        showNotification('You lost the battle. Better luck next time!', 'error');
+        showNotification(`Joined ${battle.mode} battle!`, 'success');
     }
-    
-    // Remove battle from list
-    gameData.battles = gameData.battles.filter(b => b.id !== battleId);
-    loadBattles();
-    updateBalance();
 }
 
-// Update battles (simulate other players)
-function updateBattles() {
-    gameData.battles.forEach(battle => {
-        if (Math.random() < 0.1 && battle.currentPlayers < battle.maxPlayers) {
-            battle.currentPlayers++;
-            battle.pot += battle.entryFee;
+function startBattle(battle) {
+    // Simulate battle
+    setTimeout(() => {
+        const winner = Math.random() < 0.5; // 50% chance to win
+        const winAmount = battle.pot * 0.9; // 10% house edge
+        
+        if (winner) {
+            gameState.user.balance.coins += winAmount;
+            gameState.user.stats.battlesWon++;
+            gameState.user.stats.totalWinnings += winAmount;
+            showNotification(`You won the battle! +$${winAmount.toFixed(2)}`, 'success');
+            soundManager.play('win');
+        } else {
+            gameState.user.stats.battlesLost++;
+            showNotification('You lost the battle. Better luck next time!', 'error');
         }
-    });
-    
-    // Remove completed battles
-    gameData.battles = gameData.battles.filter(battle => battle.currentPlayers < battle.maxPlayers || Math.random() > 0.05);
-    
-    loadBattles();
+        
+        updateUI();
+        saveUserData();
+        
+        // Remove battle from list
+        gameState.battles = gameState.battles.filter(b => b.id !== battle.id);
+        loadBattles();
+    }, 2000);
 }
 
-// Update leaderboard
-function updateLeaderboard() {
-    // Simulate leaderboard changes
-    gameData.leaderboard.forEach(player => {
-        if (Math.random() < 0.1) {
-            player.wins += Math.floor(Math.random() * 3);
-            player.profit += Math.floor(Math.random() * 100);
-        }
-    });
-    
-    // Sort by profit
-    gameData.leaderboard.sort((a, b) => b.profit - a.profit);
-    
-    // Update ranks
-    gameData.leaderboard.forEach((player, index) => {
-        player.rank = index + 1;
-    });
-    
-    loadLeaderboard();
+// Modal Functions
+function openDeposit() {
+    document.getElementById('depositModal').style.display = 'block';
 }
 
-// Show inventory
-function showInventory() {
-    const modal = document.getElementById('inventoryModal');
+function openWithdraw() {
+    document.getElementById('withdrawModal').style.display = 'block';
+}
+
+function openInventory() {
+    loadInventory();
+    document.getElementById('inventoryModal').style.display = 'block';
+}
+
+function loadInventory() {
     const inventoryGrid = document.getElementById('inventoryGrid');
-    const inventoryValue = document.getElementById('inventoryValue');
+    const totalItems = document.getElementById('totalItems');
+    const totalValue = document.getElementById('totalValue');
     
     inventoryGrid.innerHTML = '';
-    let totalValue = 0;
+    let total = 0;
     
-    gameData.userInventory.forEach(item => {
+    gameState.user.inventory.forEach(item => {
         const itemElement = document.createElement('div');
         itemElement.className = 'inventory-item';
         itemElement.innerHTML = `
-            <div class="item-image">${item.icon || '🎁'}</div>
+            <img src="${item.image}" alt="${item.name}" style="width: 80px; height: 80px; object-fit: contain;">
             <div class="item-name">${item.name}</div>
-            <div class="item-value">${item.value} 💎</div>
+            <div class="item-value">$${item.value.toFixed(2)}</div>
         `;
         inventoryGrid.appendChild(itemElement);
-        totalValue += item.value;
+        total += item.value;
     });
     
-    inventoryValue.textContent = totalValue;
-    modal.style.display = 'block';
+    totalItems.textContent = gameState.user.inventory.length;
+    totalValue.textContent = `$${total.toFixed(2)}`;
 }
 
-// Close modal
+function selectDepositMethod(method) {
+    document.getElementById('depositForm').style.display = 'block';
+    soundManager.play('click');
+}
+
+function selectWithdrawMethod(method) {
+    document.getElementById('withdrawForm').style.display = 'block';
+    soundManager.play('click');
+}
+
+function confirmDeposit() {
+    const amount = parseFloat(document.getElementById('depositAmount').value);
+    if (amount < 5) {
+        showNotification('Minimum deposit is $5', 'error');
+        return;
+    }
+    
+    // Add bonus
+    const bonus = amount * 0.05;
+    gameState.user.balance.coins += amount + bonus;
+    updateUI();
+    saveUserData();
+    
+    closeModal('depositModal');
+    showNotification(`Deposited $${amount.toFixed(2)} + $${bonus.toFixed(2)} bonus!`, 'success');
+}
+
+function confirmWithdraw() {
+    const amount = parseFloat(document.getElementById('withdrawAmount').value);
+    const address = document.getElementById('withdrawAddress').value;
+    
+    if (amount < 10) {
+        showNotification('Minimum withdrawal is $10', 'error');
+        return;
+    }
+    
+    if (gameState.user.balance.coins < amount) {
+        showNotification('Insufficient balance!', 'error');
+        return;
+    }
+    
+    const fee = amount * 0.025;
+    gameState.user.balance.coins -= amount;
+    updateUI();
+    saveUserData();
+    
+    closeModal('withdrawModal');
+    showNotification(`Withdrew $${(amount - fee).toFixed(2)} (Fee: $${fee.toFixed(2)})`, 'success');
+}
+
 function closeModal(modalId) {
     document.getElementById(modalId).style.display = 'none';
+    soundManager.play('click');
 }
 
-// Show notification
+// User Functions
+function toggleUserMenu() {
+    const dropdown = document.getElementById('userDropdown');
+    dropdown.classList.toggle('show');
+}
+
+function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('goldpump_user');
+        location.reload();
+    }
+}
+
+// Utility Functions
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+        soundManager.play('click');
+    }
+}
+
+function filterCases(filter) {
+    const cases = document.querySelectorAll('.case-card');
+    cases.forEach(caseCard => {
+        caseCard.style.display = 'block';
+    });
+    // Add actual filtering logic here
+}
+
 function showNotification(message, type) {
-    // Create notification element
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
     notification.style.cssText = `
@@ -481,61 +754,100 @@ function showNotification(message, type) {
         font-weight: 600;
         z-index: 3000;
         animation: slideIn 0.3s ease;
-        ${type === 'success' ? 'background: #4caf50;' : 'background: #f44336;'}
+        ${type === 'success' ? 'background: var(--success);' : 'background: var(--danger);'}
     `;
     notification.textContent = message;
     
     document.body.appendChild(notification);
     
-    // Remove after 3 seconds
     setTimeout(() => {
         notification.remove();
     }, 3000);
 }
 
-// Scroll to section
-function scrollToSection(sectionId) {
-    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+function saveUserData() {
+    localStorage.setItem('goldpump_user', JSON.stringify(gameState.user));
 }
 
-// Handle navigation clicks
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        scrollToSection(targetId);
+// Real-time Updates
+function startRealTimeUpdates() {
+    // Update battles every 5 seconds
+    setInterval(() => {
+        updateBattles();
+    }, 5000);
+    
+    // Update leaderboard every 10 seconds
+    setInterval(() => {
+        updateLeaderboard();
+    }, 10000);
+    
+    // Update stats every 3 seconds
+    setInterval(() => {
+        updateStats();
+    }, 3000);
+    
+    // Simulate other players joining battles
+    setInterval(() => {
+        simulateBattleActivity();
+    }, 8000);
+}
+
+function updateBattles() {
+    // Add random players to battles
+    gameState.battles.forEach(battle => {
+        if (battle.status === 'waiting' && Math.random() < 0.3) {
+            if (battle.currentPlayers < battle.maxPlayers) {
+                battle.currentPlayers++;
+                battle.pot += battle.entryFee;
+                const randomNames = ['Player' + Math.floor(Math.random() * 1000), 'Guest' + Math.floor(Math.random() * 1000)];
+                battle.players.push(randomNames[Math.floor(Math.random() * randomNames.length)]);
+            }
+        }
     });
-});
+    
+    // Remove completed battles
+    gameState.battles = gameState.battles.filter(battle => {
+        if (battle.currentPlayers === battle.maxPlayers && Math.random() < 0.1) {
+            return false;
+        }
+        return true;
+    });
+    
+    loadBattles();
+}
 
-// Handle inventory button click (if exists)
-document.addEventListener('click', function(e) {
-    if (e.target.textContent === 'Inventory') {
-        showInventory();
-    }
-});
+function updateLeaderboard() {
+    // Simulate leaderboard changes
+    // This would normally fetch from server
+}
 
-// Close modals when clicking outside
-window.onclick = function(event) {
-    if (event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
+function simulateBattleActivity() {
+    // Add new battles occasionally
+    if (Math.random() < 0.2 && gameState.battles.length < 10) {
+        const modes = ['1v1', '2v2', '3v3'];
+        const mode = modes[Math.floor(Math.random() * modes.length)];
+        const entryFee = Math.random() * 50 + 10;
+        
+        const newBattle = {
+            id: gameState.battles.length + 1,
+            mode: mode,
+            creator: 'RandomPlayer' + Math.floor(Math.random() * 1000),
+            entryFee: entryFee,
+            pot: entryFee * (mode === '1v1' ? 2 : mode === '2v2' ? 4 : 6),
+            maxPlayers: mode === '1v1' ? 2 : mode === '2v2' ? 4 : 6,
+            currentPlayers: 1,
+            players: ['RandomPlayer' + Math.floor(Math.random() * 1000)],
+            status: 'waiting'
+        };
+        
+        gameState.battles.push(newBattle);
+        loadBattles();
     }
 }
 
-// Add keyboard shortcuts
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.style.display = 'none';
-        });
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.user-menu')) {
+        document.getElementById('userDropdown').classList.remove('show');
     }
 });
-
-// Simulate real-time balance updates
-setInterval(() => {
-    if (Math.random() < 0.05) { // 5% chance every 5 seconds
-        const bonus = Math.floor(Math.random() * 50) + 10;
-        gameData.userBalance += bonus;
-        updateBalance();
-        showNotification(`Daily bonus! +${bonus} 💎`, 'success');
-    }
-}, 5000);
