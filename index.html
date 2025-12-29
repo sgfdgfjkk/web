@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBX Gold - Case Battles & Gambling</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <h1>RBX <span class="gold">GOLD</span></h1>
+                </div>
+                <nav class="nav-links">
+                    <a href="#cases" class="nav-link">Cases</a>
+                    <a href="#battles" class="nav-link">Battles</a>
+                    <a href="#leaderboard" class="nav-link">Leaderboard</a>
+                    <a href="#inventory" class="nav-link">Inventory</a>
+                </nav>
+                <div class="user-section">
+                    <div class="balance">
+                        <span class="balance-icon">💎</span>
+                        <span id="userBalance">1,250</span>
+                    </div>
+                    <button class="deposit-btn">Deposit</button>
+                    <button class="withdraw-btn">Withdraw</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2 class="hero-title">Open Cases & Battle Friends</h2>
+                    <p class="hero-subtitle">Win rare items and dominate the leaderboard</p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">2.5M+</span>
+                            <span class="stat-label">Users</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">$50M+</span>
+                            <span class="stat-label">Winnings</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">1000+</span>
+                            <span class="stat-label">Items</span>
+                        </div>
+                    </div>
+                    <button class="cta-button" onclick="scrollToSection('cases')">Start Opening</button>
+                </div>
+                <div class="hero-image">
+                    <div class="floating-case">
+                        <div class="case-3d">
+                            <div class="case-face case-front"></div>
+                            <div class="case-face case-back"></div>
+                            <div class="case-face case-left"></div>
+                            <div class="case-face case-right"></div>
+                            <div class="case-face case-top"></div>
+                            <div class="case-face case-bottom"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Cases -->
+        <section id="cases" class="featured-cases">
+            <div class="container">
+                <h2 class="section-title">Featured Cases</h2>
+                <div class="case-grid" id="caseGrid">
+                    <!-- Cases will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Active Battles -->
+        <section id="battles" class="active-battles">
+            <div class="container">
+                <h2 class="section-title">Active Battles</h2>
+                <div class="battle-controls">
+                    <button class="create-battle-btn" onclick="createBattle()">Create Battle</button>
+                    <select id="battleFilter" class="battle-filter">
+                        <option value="all">All Battles</option>
+                        <option value="1v1">1v1</option>
+                        <option value="2v2">2v2</option>
+                        <option value="3v3">3v3</option>
+                    </select>
+                </div>
+                <div class="battle-list" id="battleList">
+                    <!-- Battles will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Leaderboard -->
+        <section id="leaderboard" class="leaderboard">
+            <div class="container">
+                <h2 class="section-title">Top Players</h2>
+                <div class="leaderboard-list" id="leaderboardList">
+                    <!-- Leaderboard will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Inventory Modal -->
+        <div id="inventoryModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Your Inventory</h3>
+                    <span class="close" onclick="closeModal('inventoryModal')">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="inventory-grid" id="inventoryGrid">
+                        <!-- Inventory items will be loaded here -->
+                    </div>
+                    <div class="inventory-value">
+                        <span>Total Value: </span>
+                        <span id="inventoryValue">0</span>
+                        <span class="balance-icon">💎</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Battle Creation Modal -->
+        <div id="battleModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Create Battle</h3>
+                    <span class="close" onclick="closeModal('battleModal')">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="battle-setup">
+                        <div class="setup-group">
+                            <label>Battle Type</label>
+                            <select id="battleType">
+                                <option value="1v1">1v1 Battle</option>
+                                <option value="2v2">2v2 Battle</option>
+                                <option value="3v3">3v3 Battle</option>
+                            </select>
+                        </div>
+                        <div class="setup-group">
+                            <label>Max Players</label>
+                            <select id="maxPlayers">
+                                <option value="2">2 Players</option>
+                                <option value="4">4 Players</option>
+                                <option value="6">6 Players</option>
+                            </select>
+                        </div>
+                        <div class="setup-group">
+                            <label>Entry Fee</label>
+                            <input type="number" id="entryFee" value="100" min="10" max="10000">
+                        </div>
+                        <div class="setup-group">
+                            <label>Case Selection</label>
+                            <div class="case-selection" id="caseSelection">
+                                <!-- Cases will be loaded here -->
+                            </div>
+                        </div>
+                        <button class="confirm-battle-btn" onclick="confirmBattle()">Create Battle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Case Opening Animation -->
+        <div id="caseOpeningModal" class="modal">
+            <div class="modal-content case-opening">
+                <div class="case-animation">
+                    <div class="case-3d spinning">
+                        <div class="case-face case-front"></div>
+                        <div class="case-face case-back"></div>
+                        <div class="case-face case-left"></div>
+                        <div class="case-face case-right"></div>
+                        <div class="case-face case-top"></div>
+                        <div class="case-face case-bottom"></div>
+                    </div>
+                </div>
+                <div class="reel-container">
+                    <div class="item-reel" id="itemReel">
+                        <!-- Items will spin here -->
+                    </div>
+                </div>
+                <div class="result-container" id="resultContainer" style="display: none;">
+                    <h3>You Won!</h3>
+                    <div class="won-item" id="wonItem">
+                        <!-- Won item will be displayed here -->
+                    </div>
+                    <button class="continue-btn" onclick="closeCaseOpening()">Continue</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>RBX Gold</h4>
+                    <p>The ultimate Roblox gambling experience</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <a href="#terms">Terms of Service</a>
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#fairness">Fairness Policy</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <a href="#help">Help Center</a>
+                    <a href="#contact">Contact Us</a>
+                    <a href="#faq">FAQ</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 RBX Gold. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">📱</a>
+                    <a href="#" class="social-link">💬</a>
+                    <a href="#" class="social-link">🎮</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
